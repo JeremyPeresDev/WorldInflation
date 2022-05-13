@@ -28,12 +28,12 @@ def main():
     # Merge csv and world data
     table = world.merge(dataCsv, how="left", left_on=['iso_a3'], right_on=['iso_a3'])
     
-    map = folium.Map()
+    map = folium.Map([45, 13],zoom_start=3, maxZoom=6,minZoom=1.8)
     
     # Create a white image of 4 pixels, and embed it in a url.
     white_tile = branca.utilities.image_to_url([[1, 1], [1, 1]])
 
-    m = folium.Map([23.53, 78.3], maxZoom=6,minZoom=4.8,zoom_control=True,zoom_start=5,
+    m = folium.Map(zoom_control=True,
                    scrollWheelZoom=True,maxBounds=[[40, 68],[6, 97]],tiles=white_tile,attr='white tile',
                    dragging=True).add_to(map)
     #Add layers for Popup and Tooltips
@@ -59,7 +59,7 @@ def main():
         legend_name='Inflation en %'
     ).add_to(map)
 
-    #Removes top right legend
+
     for key in choropleth._children:
         if key.startswith('color_map'):
             del(choropleth._children[key])
